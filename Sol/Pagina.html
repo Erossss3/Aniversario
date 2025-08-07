@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3 Años Juntos 💖</title>
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(to bottom, #fde4e1, #e6e6fa);
+            color: #4b0082;
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .section {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            max-width: 900px;
+            box-sizing: border-box;
+        }
+
+        .active {
+            display: flex;
+        }
+        
+        #login-form {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(128, 0, 128, 0.5);
+            max-width: 400px;
+        }
+        #login-form input {
+            display: block;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            width: 100%;
+        }
+        #login-form button {
+            background-color: #ff69b4;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        #reloj h1 {
+            color: #800080;
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+        }
+        #timer-text {
+            font-size: 1.5em;
+            margin: 20px 0;
+            color: #da70d6;
+        }
+        #timer-clock {
+            font-size: 3em;
+            color: #da70d6;
+            font-weight: bold;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .photo-grid img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            object-fit: cover;
+        }
+        .message {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: #800080;
+        }
+
+        .roulette-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+        .roulette {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 5px solid #ff69b4;
+            position: relative;
+            overflow: hidden;
+            background-image: conic-gradient(#ff69b4 0% 12.5%, #da70d6 12.5% 25%, #ffb6c1 25% 37.5%, #e6e6fa 37.5% 50%, #da70d6 50% 62.5%, #ff69b4 62.5% 75%, #ffb6c1 75% 87.5%, #e6e6fa 87.5% 100%);
+        }
+        .roulette-pointer {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 30px solid #800080;
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .roulette-button {
+            background-color: #ff69b4;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+        #cupon-resultado {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #800080;
+            padding: 15px;
+            border: 2px dashed #ff69b4;
+            border-radius: 10px;
+            display: none;
+        }
+
+        #quiz-container {
+            width: 100%;
+            text-align: left;
+        }
+        .pregunta {
+            margin-bottom: 15px;
+        }
+        .pregunta p {
+            margin-bottom: 5px;
+        }
+        .pregunta label {
+            display: block;
+            margin-bottom: 3px;
+        }
+        
+        .nav-buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+        }
+        .nav-buttons button {
+            background-color: #ff69b4;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+        
+        #quiz-mensaje {
+            color: #800080;
+        }
+
+        .music-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .music-container img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .music-container audio {
+            width: 100%;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login" class="section active">
+        <form id="login-form">
+            <h1>Bienvenida, mi amor ❤️</h1>
+            <p>Para entrar, por favor escribe tu nombre y apellido.</p>
+            <input type="text" id="nombre" placeholder="Nombre" required>
+            <input type="text" id="apellido" placeholder="Apellido" required>
+            <button type="submit">Iniciar Sesión</button>
+            <p id="login-error" style="color: red; margin-top: 10px; display: none;">Nombre o apellido incorrectos.</p>
+        </form>
+    </div>
+
+    <div id="reloj" class="section">
+        <h1>Ya 3 años juntos y faltan muchos más</h1>
+        <div id="timer-text"></div>
+        <div id="timer-clock"></div>
+        <p>¡Feliz aniversario, mi amor!</p>
+        <div class="nav-buttons">
+            <button onclick="siguiente(3)">Siguiente</button>
+        </div>
+    </div>
+    
+    <div id="fotos-1" class="section">
+        <p class="message">Recuerdos de nuestros 3 años juntos 💖</p>
+        <div class="photo-grid">
+            <img src="Flor1.jpg" alt="Foto 1">
+            <img src="Flor2.jpg" alt="Foto 2">
+            <img src="Foto1.jpg" alt="Foto 3">
+            <img src="Foto2.jpg" alt="Foto 4">
+            <img src="Foto3.jpg" alt="Foto 5">
+            <img src="Foto4.jpg" alt="Foto 6">
+        </div>
+        <div class="nav-buttons">
+            <button onclick="siguiente(4)">Siguiente</button>
+        </div>
+    </div>
+    
+    <div id="fotos-2" class="section">
+        <p class="message">¡Más momentos inolvidables!</p>
+        <div class="photo-grid">
+            <img src="Foto5.jpg" alt="Foto 7">
+            <img src="Foto6.jpg" alt="Foto 8">
+            <img src="Foto7.jpg" alt="Foto 9">
+            <img src="Foto8.jpg" alt="Foto 10">
+        </div>
+        <div class="nav-buttons">
+            <button onclick="siguiente(5)">Siguiente</button>
+        </div>
+    </div>
+
+    <div id="musica" class="section">
+        <p class="message">Te amo, para vos ❤️</p>
+        <div style="display: flex; flex-direction: column; gap: 20px; align-items: center; margin-top: 20px;">
+            <div class="music-container">
+                <img src="saturno.jpg" alt="Saturno">
+                <audio controls src="saturno.mp3"></audio>
+            </div>
+            <div class="music-container">
+                <img src="lamejordetodas.jpg" alt="La Mejor de Todas">
+                <audio controls src="lamejordetodas.mp3"></audio>
+            </div>
+            <div class="music-container">
+                <img src="viernes13.jpg" alt="Viernes 13">
+                <audio controls src="viernes13.mp3"></audio>
+            </div>
+        </div>
+        <div class="nav-buttons">
+            <button onclick="siguiente(6)">Siguiente</button>
+        </div>
+    </div>
+    
+    <div id="ruleta-cupones" class="section">
+        <h1>Hora de la Ruleta de los Cupones</h1>
+        <p>Gira la ruleta para ganar un premio. ¡Solo tienes un intento!</p>
+        <div class="roulette-container">
+            <div class="roulette" id="ruleta"></div>
+            <div class="roulette-pointer"></div>
+        </div>
+        <button class="roulette-button" id="girar-ruleta">Girar</button>
+        <p id="cupon-resultado">¡Ganaste un cupón de [CUPON]!</p>
+        
+        <div class="nav-buttons">
+            <button onclick="siguiente(7)">Siguiente</button>
+        </div>
+    </div>
+    
+    <div id="cuestionario" class="section">
+        <h1>Para hacer válido el cupón</h1>
+        <p>Responde estas preguntas. ¡Tienes que acertar todas para validar tu cupón!</p>
+        <div id="quiz-container">
+            <div class="pregunta">
+                <p>1. ¿Cuál es nuestro postre favorito para compartir?</p>
+                <label><input type="radio" name="p1" value="A"> Tiramisú</label>
+                <label><input type="radio" name="p1" value="B"> Helado</label>
+                <label><input type="radio" name="p1" value="C"> Cheesecake</label>
+                <label><input type="radio" name="p1" value="D"> Chocotorta</label>
+            </div>
+            <div class="pregunta">
+                <p>2. ¿Cuál fue el primer anime que vimos juntos?</p>
+                <label><input type="radio" name="p2" value="A"> Haikyuu</label>
+                <label><input type="radio" name="p2" value="B"> Blue Lock</label>
+                <label><input type="radio" name="p2" value="C"> Tokyo Revengers</label>
+                <label><input type="radio" name="p2" value="D"> Kuroko no Basket</label>
+            </div>
+            <div class="pregunta">
+                <p>3. ¿Cuál de estas es mi comida favorita que cocinas?</p>
+                <label><input type="radio" name="p3" value="A"> Pizza</label>
+                <label><input type="radio" name="p3" value="B"> Hamburguesa</label>
+                <label><input type="radio" name="p3" value="C"> Empanada</label>
+                <label><input type="radio" name="p3" value="D"> Todas las anteriores</label>
+            </div>
+            <div class="pregunta">
+                <p>4. ¿En qué lugar tuvimos nuestra primera cita?</p>
+                <label><input type="radio" name="p4" value="A"> En la casa de un amigo</label>
+                <label><input type="radio" name="p4" value="B"> En el cine</label>
+                <label><input type="radio" name="p4" value="C"> En una plaza</label>
+                <label><input type="radio" name="p4" value="D"> En mi casa</label>
+            </div>
+            <div class="pregunta">
+                <p>5. ¿En qué mes nos fuimos a vivir juntos?</p>
+                <label><input type="radio" name="p5" value="A"> Febrero</label>
+                <label><input type="radio" name="p5" value="B"> Marzo</label>
+                <label><input type="radio" name="p5" value="C"> Abril</label>
+                <label><input type="radio" name="p5" value="D"> Mayo</label>
+            </div>
+            <div class="pregunta">
+                <p>6. Si no hubiera estudiado contador, ¿qué habría estudiado?</p>
+                <label><input type="radio" name="p6" value="A"> Diseño gráfico</label>
+                <label><input type="radio" name="p6" value="B"> Programación</label>
+                <label><input type="radio" name="p6" value="C"> Ingeniería</label>
+                <label><input type="radio" name="p6" value="D"> Abogado</label>
+            </div>
+            <div class="pregunta">
+                <p>7. ¿Cuál es mi dulce favorito de la infancia?</p>
+                <label><input type="radio" name="p7" value="A"> Caramelos Sugus</label>
+                <label><input type="radio" name="p7" value="B"> Bon o Bon</label>
+                <label><input type="radio" name="p7" value="C"> Chocolates</label>
+                <label><input type="radio" name="p7" value="D"> Alfajores</label>
+            </div>
+            <div class="pregunta">
+                <p>8. ¿Cuál de estos cantantes me gusta más?</p>
+                <label><input type="radio" name="p8" value="A"> Adele</label>
+                <label><input type="radio" name="p8" value="B"> Ke Personaje</label>
+                <label><input type="radio" name="p8" value="C"> Aurora</label>
+                <label><input type="radio" name="p8" value="D"> Rihanna</label>
+            </div>
+        </div>
+        <div class="nav-buttons">
+            <button onclick="validarCupon()">Validar Cupón</button>
+        </div>
+        <p id="quiz-mensaje" style="margin-top: 20px;"></p>
+        
+        <div class="nav-buttons">
+            <button onclick="siguiente(8)" style="display: none;" id="siguiente-final">Siguiente</button>
+        </div>
+    </div>
+    
+    <div id="mensaje-final" class="section">
+        <h1>Mi mensaje para ti</h1>
+        <p>¡Y aquí está mi mensaje de amor para ti!</p>
+        <p style="font-size: 1.5em; margin-top: 30px;">
+            Mi amor, no puedo creer que ya hayan pasado 3 años. Desde el primer día, supiste cómo hacer mi mundo más brillante, mi corazón más cálido y mis días más felices. Gracias por ser mi compañera, mi mejor amiga y mi todo. No hay nada en el mundo que me haga más feliz que saber que estás a mi lado. Te amo hoy, mañana y siempre. ❤️
+        </p>
+    </div>
+
+<script>
+    const secciones = document.querySelectorAll('.section');
+    let seccionActual = 1;
+
+    function siguiente(num) {
+        secciones[seccionActual - 1].classList.remove('active');
+        seccionActual = num;
+        secciones[seccionActual - 1].classList.add('active');
+    }
+
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const nombre = document.getElementById('nombre').value.trim();
+        const apellido = document.getElementById('apellido').value.trim();
+        
+        if (nombre === "Sol" && apellido === "Altamiranda") {
+            siguiente(2);
+        } else {
+            document.getElementById('login-error').style.display = 'block';
+        }
+    });
+
+    const aniversario = new Date('August 7, 2022 00:00:00');
+
+    function actualizarReloj() {
+        const ahora = new Date();
+        const diferencia = ahora.getTime() - aniversario.getTime();
+
+        const años = Math.floor(diferencia / (1000 * 60 * 60 * 24 * 365.25));
+        const meses = Math.floor(diferencia / (1000 * 60 * 60 * 24 * 30.44) % 12);
+        const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24) % 30.44);
+        const horas = Math.floor(diferencia / (1000 * 60 * 60) % 24).toString().padStart(2, '0');
+        const minutos = Math.floor(diferencia / (1000 * 60) % 60).toString().padStart(2, '0');
+        const segundos = Math.floor(diferencia / 1000 % 60).toString().padStart(2, '0');
+
+        document.getElementById('timer-text').innerHTML = 
+            `Llevamos ${años} años, ${meses} meses y ${dias} días`;
+        document.getElementById('timer-clock').innerHTML = 
+            `${horas}:${minutos}:${segundos}`;
+    }
+
+    setInterval(actualizarReloj, 1000);
+    actualizarReloj();
+
+    const cupones = ["Una noche de películas", "Cena, yo cocino", "Postre", "Masajes", "Día libre, no haces nada", "Cenar afuera", "Salir a pasear", "Elegís vos"];
+    let ruletaGirada = false;
+
+    document.getElementById('girar-ruleta').addEventListener('click', function() {
+        if (!ruletaGirada) {
+            ruletaGirada = true;
+            this.disabled = true;
+
+            const resultadoIndex = Math.floor(Math.random() * cupones.length);
+            const resultado = cupones[resultadoIndex];
+            const anguloGiro = (360 / cupones.length) * resultadoIndex + 360 * 5;
+            
+            const ruletaElemento = document.getElementById('ruleta');
+            ruletaElemento.style.transition = 'transform 5s ease-out';
+            ruletaElemento.style.transform = `rotate(${anguloGiro}deg)`;
+
+            setTimeout(() => {
+                document.getElementById('cupon-resultado').innerHTML = `¡Ganaste un cupón para **${resultado}**!`;
+                document.getElementById('cupon-resultado').style.display = 'block';
+                ruletaElemento.style.transition = 'none';
+                ruletaElemento.style.transform = 'rotate(0deg)';
+            }, 5000);
+        }
+    });
+
+    let intentosRestantes = 3;
+    function validarCupon() {
+        const respuestasCorrectas = {
+            p1: 'D',
+            p2: 'A',
+            p3: 'A',
+            p4: 'C',
+            p5: 'A',
+            p6: 'B',
+            p7: 'B',
+            p8: 'A',
+        };
+        let todasCorrectas = true;
+        let mensaje = document.getElementById('quiz-mensaje');
+        
+        for (let i = 1; i <= Object.keys(respuestasCorrectas).length; i++) {
+            const pregunta = 'p' + i;
+            const respuestaUsuario = document.querySelector(`input[name="${pregunta}"]:checked`);
+            if (!respuestaUsuario || respuestaUsuario.value !== respuestasCorrectas[pregunta]) {
+                todasCorrectas = false;
+                break;
+            }
+        }
+
+        if (todasCorrectas) {
+            mensaje.style.color = '#da70d6';
+            mensaje.textContent = '¡Felicidades! Todas las respuestas son correctas. Tu cupón está validado.';
+            document.getElementById('siguiente-final').style.display = 'block';
+        } else {
+            intentosRestantes--;
+            if (intentosRestantes > 0) {
+                mensaje.style.color = 'red';
+                mensaje.textContent = `Hay una o más respuestas incorrectas. Te quedan ${intentosRestantes} intentos.`;
+            } else {
+                mensaje.style.color = 'red';
+                mensaje.textContent = 'No te quedan más intentos. El cupón no ha sido validado.';
+                document.querySelector('#cuestionario .nav-buttons button').disabled = true;
+                document.getElementById('siguiente-final').style.display = 'block';
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
